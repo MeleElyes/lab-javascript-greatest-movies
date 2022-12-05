@@ -45,7 +45,7 @@ function dramaMoviesScore(moviesArray) {
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 function orderByYear(moviesArray) {
   const newArray = moviesArray.map((elem) => elem);
-  const movieByYear = newArray.sort((a, b) => a.year - b.year);
+  const movieByYear = newArray.sort((a, b) => { return (a.year - b.year || a.title.localeCompare(b.title));});
   return movieByYear;
 }
 
@@ -85,16 +85,12 @@ function bestYearAvg(moviesArray) {
   for (i = 0; i < moviesArray.length; i++) {
     yearAndScore.push([moviesArray[i].year, moviesArray[i].score]);
   }
-  console.log(yearAndScore);
 
-  let result = [yearAndScore[0]];
+  let result = [];
   for (i = 0; i < yearAndScore.length; i++) {
-    let annee = yearAndScore[i];
-    const test = result[i].find((element) => (element = annee[0]));
-    if (test) {
-      result[i].push(annee[1]);
-    } else {
-      result.push(annee);
-    }
-  }
+        if(result.indexOf(yearAndScore[i][0]) < 0) {result.push(yearAndScore[i])}
+        else {result[result.indexOf(yearAndScore[i][0])].push(yearAndScore[1])}
 }
+return result
+}
+
